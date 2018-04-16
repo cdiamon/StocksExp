@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Resultant</string>
+
+    <string name="refresh">Refresh</string>
+    <string name="stockl">Stocks list</string>
+    <string name="aboitiz">Aboitiz</string>
+    <string name="price_702030">price: 702030</string>
+    <string name="amount_68_20">amount: 68.20</string>
+</resources>
