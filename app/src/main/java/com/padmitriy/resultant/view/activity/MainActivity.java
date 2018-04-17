@@ -3,6 +3,7 @@ package com.padmitriy.resultant.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -63,8 +64,14 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    Snackbar snackbar = null;
+
     private void getStockData(boolean useDelay) {
         if (networkAvailable()) {
+
+            if (snackbar != null) {
+                snackbar.dismiss();
+            }
 
             compositeDisposable.add(resultantApi.getStocks()
                     .subscribeOn(Schedulers.io())
@@ -76,10 +83,14 @@ public class MainActivity extends BaseActivity {
                         getStockData(true);
                     }, throwable -> {
                         throwable.printStackTrace();
-                        Toast.makeText(this, "Server error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Server error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Reconnecting..", Toast.LENGTH_LONG).show();
+                        getStockData(true);
                     }));
         } else {
-            Toast.makeText(this, "Enable internet connection", Toast.LENGTH_SHORT).show();
+            snackbar = Snackbar.make(stockRecyclerView, "Enable internet connection", Snackbar.LENGTH_INDEFINITE);
+            snackbar.show();
+            stockProgressBar.setVisibility(View.GONE);
         }
     }
 
