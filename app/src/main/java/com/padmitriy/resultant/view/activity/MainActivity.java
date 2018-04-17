@@ -59,20 +59,21 @@ public class MainActivity extends BaseActivity {
         stockRecyclerAdapter = new StocksRecyclerAdapter();
         stockRecyclerView.setAdapter(stockRecyclerAdapter);
 
-        getStockData();
+        getStockData(false);
 
     }
 
-    private void getStockData() {
+    private void getStockData(boolean useDelay) {
         if (networkAvailable()) {
+
             compositeDisposable.add(resultantApi.getStocks()
                     .subscribeOn(Schedulers.io())
-                    .delay(15, TimeUnit.SECONDS)
+                    .delay(useDelay ? 15 : 0, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(response -> {
                         stockProgressBar.setVisibility(View.GONE);
                         fillStockData(response);
-                        getStockData();
+                        getStockData(true);
                     }, throwable -> {
                         throwable.printStackTrace();
                         Toast.makeText(this, "Server error", Toast.LENGTH_SHORT).show();
@@ -91,7 +92,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getStockData();
+        getStockData(false);
     }
 
 
@@ -100,6 +101,6 @@ public class MainActivity extends BaseActivity {
         compositeDisposable.clear();
         Toast.makeText(this, "Refreshing..", Toast.LENGTH_SHORT).show();
         stockProgressBar.setVisibility(View.VISIBLE);
-        getStockData();
+        getStockData(false);
     }
 }
