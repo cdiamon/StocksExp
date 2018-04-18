@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -36,9 +37,10 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.stockProgressBar)
     ProgressBar stockProgressBar;
     private StocksRecyclerAdapter stockRecyclerAdapter;
+    private Snackbar snackbar;
 
-    public static void launch(Context context) {
-        context.startActivity(new Intent(context, MainActivity.class));
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
@@ -61,10 +63,7 @@ public class MainActivity extends BaseActivity {
         stockRecyclerView.setAdapter(stockRecyclerAdapter);
 
         getStockData(false);
-
     }
-
-    Snackbar snackbar = null;
 
     private void getStockData(boolean useDelay) {
         if (networkAvailable()) {
@@ -99,13 +98,6 @@ public class MainActivity extends BaseActivity {
         System.out.println(stocks.getStock().get(0).toString());
         stockRecyclerAdapter.updateRecyclerList(stocks.getStock());
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getStockData(false);
-    }
-
 
     @OnClick(R.id.refreshButton)
     public void onViewClicked() {

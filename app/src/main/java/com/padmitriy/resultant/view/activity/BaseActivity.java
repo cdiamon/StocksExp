@@ -16,8 +16,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
-        compositeDisposable = new CompositeDisposable();
+        compositeDisposable.clear();
     }
 
     boolean networkAvailable() {

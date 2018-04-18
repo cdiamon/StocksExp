@@ -18,7 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private Runnable splashRunnable = () -> {
-        MainActivity.launch(WelcomeActivity.this);
+        startActivity(MainActivity.makeIntent(this));
         finish();
     };
 
