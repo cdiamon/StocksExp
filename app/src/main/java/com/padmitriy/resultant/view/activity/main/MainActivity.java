@@ -1,10 +1,10 @@
-package com.padmitriy.resultant.view.activity;
+package com.padmitriy.resultant.view.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.padmitriy.resultant.R;
 import com.padmitriy.resultant.ResultantApp;
 import com.padmitriy.resultant.entities.StockListObject;
+import com.padmitriy.resultant.mvvm.BaseViewModelActivity;
+import com.padmitriy.resultant.mvvm.ViewModel;
 import com.padmitriy.resultant.network.ResultantApi;
 import com.padmitriy.resultant.util.StocksRecyclerAdapter;
 
@@ -27,7 +29,9 @@ import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseViewModelActivity {
+
+    private MainViewModel mainViewModel;
 
     @Inject
     ResultantApi resultantApi;
@@ -41,6 +45,13 @@ public class MainActivity extends BaseActivity {
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, MainActivity.class);
+    }
+
+    @Nullable
+    @Override
+    protected MainViewModel createViewModel(@Nullable ViewModel.State savedViewModelState) {
+        mainViewModel = new MainViewModel(savedViewModelState);
+        return mainViewModel;
     }
 
     @Override
@@ -66,13 +77,36 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getStockData(boolean useDelay) {
+        //TODO uncomment this
         if (networkAvailable()) {
 
             if (snackbar != null) {
                 snackbar.dismiss();
             }
 
-            compositeDisposable.add(resultantApi.getStocks()
+            //TODO choose correct interval request method
+            disposables.clear();
+//            disposables.add(Observable.interval(0, 15, TimeUnit.SECONDS)
+//                    .flatMap(new Function<Long, ObservableSource<? extends StockListObject>>() {
+//                        @Override
+//                        public ObservableSource<? extends StockListObject> apply(Long l) throws Exception {
+//                            return resultantApi.getStocks();
+//                        }
+//                    })
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(response -> {
+//                        stockProgressBar.setVisibility(View.GONE);
+//                        fillStockData(response);
+////                        getStockData(true);
+//                    }, throwable -> {
+//                        throwable.printStackTrace();
+//                        Toast.makeText(this, "Server error", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(this, "Reconnecting..", Toast.LENGTH_LONG).show();
+////                        getStockData(true);
+//                    }));
+
+            disposables.add(resultantApi.getStocks()
                     .subscribeOn(Schedulers.io())
                     .delay(useDelay ? 15 : 0, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -101,7 +135,9 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.refreshButton)
     public void onViewClicked() {
-        compositeDisposable.clear();
+        mainViewModel.refreshButtonClicked(this);
+
+        disposables.clear();
         Toast.makeText(this, "Refreshing..", Toast.LENGTH_SHORT).show();
         stockProgressBar.setVisibility(View.VISIBLE);
         getStockData(false);

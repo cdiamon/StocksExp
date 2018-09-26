@@ -2,8 +2,8 @@ package com.padmitriy.resultant.di.module;
 
 import android.content.Context;
 
-import com.padmitriy.resultant.util.PreferencesManager;
 import com.google.gson.Gson;
+import com.padmitriy.resultant.util.PreferencesManager;
 
 import javax.inject.Singleton;
 

@@ -1,15 +1,19 @@
-package com.padmitriy.resultant.view.activity;
+package com.padmitriy.resultant.view.activity.welcome;
 
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 
 import com.padmitriy.resultant.R;
+import com.padmitriy.resultant.mvvm.BaseViewModelActivity;
+import com.padmitriy.resultant.mvvm.ViewModel;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseViewModelActivity {
 
     private Handler handler;
+    private WelcomeViewModel welcomeViewModel;
+
 
     @Override
     protected void onResume() {
@@ -18,9 +22,15 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private Runnable splashRunnable = () -> {
-        startActivity(MainActivity.makeIntent(this));
-        finish();
+        welcomeViewModel.onLoadingTimerFinished(this);
     };
+
+    @Nullable
+    @Override
+    protected ViewModel createViewModel(@Nullable ViewModel.State savedViewModelState) {
+        welcomeViewModel = new WelcomeViewModel(savedViewModelState);
+        return welcomeViewModel;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

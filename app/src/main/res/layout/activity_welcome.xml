@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/eveningBlack"
     android:fitsSystemWindows="true"
-    tools:context="com.padmitriy.resultant.view.activity.WelcomeActivity">
+    tools:context="com.padmitriy.resultant.view.activity.welcome.WelcomeActivity">
 
     <ImageView
         android:layout_width="64dp"

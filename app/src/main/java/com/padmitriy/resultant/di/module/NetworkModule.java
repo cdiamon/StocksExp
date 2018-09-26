@@ -1,10 +1,10 @@
 package com.padmitriy.resultant.di.module;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.padmitriy.resultant.BuildConfig;
 import com.padmitriy.resultant.network.ResultantApi;
 import com.padmitriy.resultant.util.PreferencesManager;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,18 +33,6 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofitApiRx(PreferencesManager preferenceManager, OkHttpClient httpClient, Gson gson) {
-        return new Retrofit.Builder()
-                .baseUrl(preferenceManager.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(httpClient)
-                .build();
-
-    }
-
-    @Provides
-    @Singleton
     public OkHttpClient provideOkClient() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -57,6 +45,17 @@ public class NetworkModule {
         return httpClient
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    public Retrofit provideRetrofitApiRx(PreferencesManager preferenceManager, OkHttpClient httpClient, Gson gson) {
+        return new Retrofit.Builder()
+                .baseUrl(preferenceManager.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(httpClient)
                 .build();
     }
 

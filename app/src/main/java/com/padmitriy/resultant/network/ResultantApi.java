@@ -2,7 +2,7 @@ package com.padmitriy.resultant.network;
 
 import com.padmitriy.resultant.entities.StockListObject;
 
-import io.reactivex.Single;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 
 /**
@@ -17,6 +17,6 @@ public interface ResultantApi {
      * Returns a list of available stocks
      */
     @GET("stocks.json")
-    Single<StockListObject> getStocks();
+    Observable<StockListObject> getStocks();
 
 }

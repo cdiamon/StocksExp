@@ -10,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "0.1"
+        versionName "0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -18,6 +18,9 @@ android {
             targetCompatibility 1.8
             sourceCompatibility 1.8
         }
+    }
+    dataBinding {
+        enabled = true
     }
     buildTypes {
         release {
@@ -34,7 +37,7 @@ dependencies {
     /**SUPPORT*/
     def supportLibVersion = "27.1.1"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:cardview-v7:$supportLibVersion"
+//    implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:support-v4:$supportLibVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -55,4 +58,27 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    /**MVVM ARCH COMPONENTS*/
+    def lifecycle_version = "1.1.1"
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+//    // alternatively - just ViewModel
+//    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version" // use -ktx for Kotlin
+//    // alternatively - just LiveData
+//    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
+//    // alternatively - Lifecycles only (no ViewModel or LiveData).
+//    //     Support library depends on this lightweight import
+//    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+//
+//    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version" // use kapt for Kotlin
+//    // alternately - if using Java8, use the following instead of compiler
+//    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+//
+//    // optional - ReactiveStreams support for LiveData
+//    implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
+//
+//    // optional - Test helpers for LiveData
+//    testImplementation "android.arch.core:core-testing:$lifecycle_version"
 }

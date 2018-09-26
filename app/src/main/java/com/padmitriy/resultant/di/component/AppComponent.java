@@ -2,7 +2,7 @@ package com.padmitriy.resultant.di.component;
 
 import com.padmitriy.resultant.ResultantApp;
 import com.padmitriy.resultant.di.module.AppModule;
-import com.padmitriy.resultant.view.activity.MainActivity;
+import com.padmitriy.resultant.view.activity.main.MainActivity;
 
 import javax.inject.Singleton;
 

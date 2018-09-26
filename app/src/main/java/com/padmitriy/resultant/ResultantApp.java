@@ -2,9 +2,6 @@ package com.padmitriy.resultant;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.padmitriy.resultant.di.component.AppComponent;
@@ -16,6 +13,7 @@ import com.padmitriy.resultant.di.component.AppComponent;
 public class ResultantApp extends Application {
 
     public static AppComponent sAppComponent;
+
     @SuppressLint("StaticFieldLeak")
 
     @Override
