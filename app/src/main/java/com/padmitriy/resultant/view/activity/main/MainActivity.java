@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.padmitriy.resultant.R;
 import com.padmitriy.resultant.ResultantApp;
-import com.padmitriy.resultant.entities.StockListObject;
+import com.padmitriy.resultant.entities.StockObjectResponse;
 import com.padmitriy.resultant.mvvm.BaseViewModelActivity;
 import com.padmitriy.resultant.mvvm.ViewModel;
 import com.padmitriy.resultant.network.ResultantApi;
@@ -87,9 +87,9 @@ public class MainActivity extends BaseViewModelActivity {
             //TODO choose correct interval request method
             disposables.clear();
 //            disposables.add(Observable.interval(0, 15, TimeUnit.SECONDS)
-//                    .flatMap(new Function<Long, ObservableSource<? extends StockListObject>>() {
+//                    .flatMap(new Function<Long, ObservableSource<? extends StockObjectResponse>>() {
 //                        @Override
-//                        public ObservableSource<? extends StockListObject> apply(Long l) throws Exception {
+//                        public ObservableSource<? extends StockObjectResponse> apply(Long l) throws Exception {
 //                            return resultantApi.getStocks();
 //                        }
 //                    })
@@ -127,7 +127,7 @@ public class MainActivity extends BaseViewModelActivity {
         }
     }
 
-    private void fillStockData(StockListObject stocks) {
+    private void fillStockData(StockObjectResponse stocks) {
         System.out.println(stocks.getAsOf());
         System.out.println(stocks.getStock().get(0).toString());
         stockRecyclerAdapter.updateRecyclerList(stocks.getStock());

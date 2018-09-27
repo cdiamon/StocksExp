@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class StockListObject {
+public class StockObjectResponse {
 
     @SerializedName("stock")
     private List<Stock> stock = null;
@@ -15,14 +15,14 @@ public class StockListObject {
     /**
      * No args constructor for use in serialization
      */
-    public StockListObject() {
+    public StockObjectResponse() {
     }
 
     /**
      * @param stock
      * @param asOf
      */
-    public StockListObject(List<Stock> stock, String asOf) {
+    public StockObjectResponse(List<Stock> stock, String asOf) {
         super();
         this.stock = stock;
         this.asOf = asOf;
@@ -30,7 +30,7 @@ public class StockListObject {
 
     @Override
     public String toString() {
-        return "StockListObject{" +
+        return "StockObjectResponse{" +
                 "stock=" + stock +
                 ", asOf='" + asOf + '\'' +
                 '}';

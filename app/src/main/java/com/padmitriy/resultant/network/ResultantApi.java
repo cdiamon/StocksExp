@@ -1,6 +1,6 @@
 package com.padmitriy.resultant.network;
 
-import com.padmitriy.resultant.entities.StockListObject;
+import com.padmitriy.resultant.entities.StockObjectResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -17,6 +17,6 @@ public interface ResultantApi {
      * Returns a list of available stocks
      */
     @GET("stocks.json")
-    Observable<StockListObject> getStocks();
+    Observable<StockObjectResponse> getStocks();
 
 }

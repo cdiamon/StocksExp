@@ -8,23 +8,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.padmitriy.resultant.R;
-import com.padmitriy.resultant.entities.StockListObject;
+import com.padmitriy.resultant.entities.StockObjectResponse;
 
 import java.util.List;
 
 public class StocksRecyclerAdapter extends RecyclerView.Adapter<StocksRecyclerAdapter.HistoryViewHolder> {
 
     private final String TAG = getClass().getSimpleName();
-    private List<StockListObject.Stock> items;
+    private List<StockObjectResponse.Stock> items;
 
     public StocksRecyclerAdapter() {
     }
 
-    public StocksRecyclerAdapter(List<StockListObject.Stock> items) {
+    public StocksRecyclerAdapter(List<StockObjectResponse.Stock> items) {
         this.items = items;
     }
 
-    public void updateRecyclerList(List<StockListObject.Stock> items) {
+    public void updateRecyclerList(List<StockObjectResponse.Stock> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -55,7 +55,7 @@ public class StocksRecyclerAdapter extends RecyclerView.Adapter<StocksRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull StocksRecyclerAdapter.HistoryViewHolder holder, int position) {
-        StockListObject.Stock stockItem = items.get(position);
+        StockObjectResponse.Stock stockItem = items.get(position);
 
         holder.stockName.setText(stockItem.getName());
         holder.stockPrice.setText("price: " + String.valueOf(stockItem.getVolume()));
